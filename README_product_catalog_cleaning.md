@@ -91,4 +91,5 @@ WHERE RowNumber > 1;
 ---
 
 ### File Included
-[Messy Product Catalog]()
+All queries related to revenue, segmentation, and marketing insights.
+- [Messy Product Catalog](https://github.com/dikko34/Product-Catalog-Data-Cleaning-Using-SQL/blob/main/Messy%20Product%20Catalog%20(DataCleaning).sql) 
