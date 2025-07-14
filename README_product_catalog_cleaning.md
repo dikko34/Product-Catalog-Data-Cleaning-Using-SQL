@@ -1,12 +1,12 @@
 
-# 🧹 Product Catalog Data Cleaning Using SQL
+# Product Catalog Data Cleaning Using SQL
 
-## 🧩 Problem Statement / Business Context
+## Problem Statement / Business Context
 The product catalog contained inconsistent naming conventions, missing values, and duplicate entries. Before analysis or integration with other systems, the data needed to be cleaned and standardized for accuracy, reporting, and usability in downstream processes.
 
 ---
 
-## 🎯 Objectives / What Was Done
+## Objectives / What Was Done
 
 ### 1. Product Name Standardization
 - Converted all product names to lowercase for consistency
@@ -34,7 +34,7 @@ The product catalog contained inconsistent naming conventions, missing values, a
 
 ---
 
-## 🗃️ Dataset Description
+## Dataset Description
 **Table:** `Messy Product Catalog`  
 **Clean Copy:** `Messy Product Catalog 2`
 
@@ -46,7 +46,7 @@ The product catalog contained inconsistent naming conventions, missing values, a
 
 ---
 
-## 🛠️ Tools & SQL Concepts Used
+## Tools & SQL Concepts Used
 - SQL Server
 - `LOWER()`, `LIKE`, `UPDATE`
 - `ISNULL()`, `AVG() OVER()`
@@ -55,12 +55,16 @@ The product catalog contained inconsistent naming conventions, missing values, a
 
 ---
 
-## 🧠 Sample SQL Snippets
+## Sample SQL Snippets
 
 ### Replacing NULL Prices with Averages
 ```sql
-SELECT *, AVG(Price) OVER(PARTITION BY ProductName ORDER BY ProductName) AS Average_Price
-FROM [Messy Product Catalog 2];
+UPDATE [Messy Product Catalog 2]
+SET Price = ISNULL(TempT.Price,Average_Prices)
+FROM #Temp_AveragePrice TempT
+JOIN [Messy Product Catalog 2] Pro2
+	ON TempT.ProductID = Pro2.ProductID
+WHERE TempT.Price IS NULL
 ```
 
 ### Removing Duplicates with ROW_NUMBER
@@ -79,7 +83,12 @@ WHERE RowNumber > 1;
 
 ## 📈 Outcome
 
-- ✅ Product names and categories are now consistent and analysis-ready
-- ✅ Missing prices were filled using relevant product-level averages
-- ✅ Duplicate entries removed, preserving dataset uniqueness
-- ✅ A clean version of the dataset was created for further business use
+-  Product names and categories are now consistent and analysis-ready
+-  Missing prices were filled using relevant product-level averages
+-  Duplicate entries removed, preserving dataset uniqueness
+-  A clean version of the dataset was created for further business use
+
+---
+
+### File Included
+[Messy Product Catalog]()
